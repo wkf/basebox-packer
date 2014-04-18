@@ -71,6 +71,10 @@
     ]
   }],
   "provisioners": [{
+    "type": "file",
+    "source": "../../patched-vmhgfs.tar",
+    "destination": "/tmp/patched-vmhgfs.tar"
+  }, {
     "type": "shell",
     "environment_vars": [
       "PROVISIONER={{user `provisioner`}}",
