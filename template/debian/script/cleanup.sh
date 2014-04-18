@@ -7,6 +7,17 @@ rm /lib/udev/rules.d/75-persistent-net-generator.rules
 echo "Adding a 2 sec delay to the interface up, to make the dhclient happy"
 echo "pre-up sleep 2" >> /etc/network/interfaces
 
+echo "Removing any old kernels..."
+apt-get purge -y $(                       \
+  dpkg --list                              \
+  | egrep '^ii  linux-(im|he)'             \
+  | awk '{print $2}'                       \
+  | grep -v `uname -r`                     \
+  | egrep -v 'linux-(image|headers)-amd64' \
+)
+
+apt-get clean -y
+
 # Clean up tmp
 rm -rf /tmp/*
 
